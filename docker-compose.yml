@@ -30,5 +30,5 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=Password1234
 
-  volumes:
-    dev-db-data:
+volumes:
+  dev-db-data:
