@@ -1,7 +1,7 @@
 """
 Views for the recipe APIs.
 """
-from django.shortcuts import render
+from django.shortcuts import render  # noqa
 
 from rest_framework import viewsets, mixins
 from rest_framework.authentication import TokenAuthentication
@@ -34,7 +34,11 @@ class RecipeViewSet(viewsets.ModelViewSet):
         serializer.save(user=self.request.user)
 
 
-class TagViewSet(mixins.UpdateModelMixin, mixins.DestroyModelMixin, mixins.ListModelMixin, viewsets.GenericViewSet):
+class TagViewSet(mixins.UpdateModelMixin,
+                 mixins.DestroyModelMixin,
+                 mixins.ListModelMixin,
+                 viewsets.GenericViewSet
+                 ):
     """Manage tags in database."""
     serializer_class = serializers.TagSerializer
     queryset = Tag.objects.all()
@@ -46,7 +50,8 @@ class TagViewSet(mixins.UpdateModelMixin, mixins.DestroyModelMixin, mixins.ListM
         return self.queryset.filter(user=self.request.user).order_by('-name')
 
 
-class IngredientViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+class IngredientViewSet(mixins.ListModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin,
+                        viewsets.GenericViewSet):
     """Manage Ingredient in the database"""
     serializer_class = serializers.IngredientSerializer
     queryset = Ingredient.objects.all()
