@@ -321,5 +321,22 @@ class PrivateRecipeAPITest(TestCase):
             'title': 'Vietnamese Soup',
             'time_minutes': 25,
             'price': Decimal('2.25'),
-            'ingredients': [{'name': 'Lemon'}, {'name': 'Fish Souce'}]
+            'ingredients': [{'name': 'Lemon'}, {'name': 'Fish Sauce'}]
         }
+
+        res = self.client.post(RECIPES_URL, payload, format='json')
+
+        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+        recipes = Recipe.objects.filter(user=self.user)
+        self.assertEqual(recipes.count(), 1)
+        recipe = recipes[0]
+        self.assertEqual(recipe.ingredients.count(), 2)
+        self.assertIn(ingredient, recipe.ingredients.all())
+        for ingredient in payload['ingredients']:
+            exists = recipe.ingredients.filter(
+                name=ingredient['name'],
+                user=self.user,
+            ).exists()
+            self.assertTrue(exists)
+
+
