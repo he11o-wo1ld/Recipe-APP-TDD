@@ -1,7 +1,7 @@
 """
 Test for models.
 """
-from unittest.mock import patch
+from unittest.mock import patch  # noqa
 from decimal import Decimal
 
 from django.test import TestCase
