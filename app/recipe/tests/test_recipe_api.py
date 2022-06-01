@@ -201,7 +201,10 @@ class PrivateRecipeAPITest(TestCase):
 
     def test_delete_other_user_recipe_error(self):
         """Test trying to delete another users recipe gives error."""
-        new_user = create_user(email='user2@gmail.com', password='password1234')
+        new_user = create_user(
+            email='user2@gmail.com',
+            password='password1234',
+        )
         recipe = create_recipe(user=new_user)
 
         url = detail_url(recipe.id)
@@ -349,5 +352,3 @@ class PrivateRecipeAPITest(TestCase):
                 user=self.user,
             ).exists()
             self.assertTrue(exists)
-
-
